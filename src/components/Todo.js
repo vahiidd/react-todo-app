@@ -4,7 +4,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import React, { useEffect, useState } from 'react';
 import db from '../firebase';
 
-function Todo({ todo, onEditMode }) {
+function Todo({ todo, setEditId }) {
   const [checked, setChecked] = useState(todo.complete);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function Todo({ todo, onEditMode }) {
       <IconButton onClick={() => removeTodo(todo.id)}>
         <CloseIcon />
       </IconButton>
-      <IconButton onClick={() => onEditMode(todo.id)}>
+      <IconButton onClick={() => setEditId(todo.id)}>
         <EditIcon />
       </IconButton>
     </ListItem>

@@ -5,25 +5,20 @@ import db from '../firebase';
 import Todo from './Todo';
 
 function TodoList({ todos }) {
-  const [editIndex, setEditIndex] = useState(-1);
-
-  function onEditMode(id) {
-    const index = todos.findIndex((todo) => todo.id === id);
-    setEditIndex(index);
-  }
+  const [editId, setEditId] = useState(null);
 
   function editTodo(id, input) {
     db.collection('todos').doc(id).set({ todo: input }, { merge: true });
-    setEditIndex(-1);
+    setEditId(null);
   }
 
   return (
     <List>
-      {todos.map((todo, index) => {
-        if (index === editIndex) {
+      {todos.map((todo) => {
+        if (todo.id === editId) {
           return <EditMode key={todo.id} todo={todo} editTodo={editTodo} />;
         }
-        return <Todo todo={todo} key={todo.id} onEditMode={onEditMode} />;
+        return <Todo todo={todo} key={todo.id} setEditId={setEditId} />;
       })}
     </List>
   );
