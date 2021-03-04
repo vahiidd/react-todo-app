@@ -17,7 +17,7 @@ function App() {
           snapshot.docs.map((doc) => ({
             id: doc.id,
             todo: doc.data().todo,
-            complete: doc.data().complete
+            complete: doc.data().complete,
           }))
         );
       });
@@ -27,8 +27,12 @@ function App() {
     db.collection('todos').add({
       todo,
       complete: false,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
+  }
+
+  function checkRepeat(value) {
+    return todos.some((todo) => todo.todo.trim() === value.trim());
   }
 
   return (
@@ -36,8 +40,8 @@ function App() {
       <Typography style={{ padding: 16 }} variant='h1'>
         React Todo
       </Typography>
-      <TodoForm addTodo={addTodo} />
-      <TodoList todos={todos} />
+      <TodoForm addTodo={addTodo} checkRepeat={checkRepeat} />
+      <TodoList todos={todos} checkRepeat={checkRepeat} />
     </div>
   );
 }

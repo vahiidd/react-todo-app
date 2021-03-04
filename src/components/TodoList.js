@@ -4,7 +4,7 @@ import EditMode from '../EditMode';
 import db from '../firebase';
 import Todo from './Todo';
 
-function TodoList({ todos }) {
+function TodoList({ todos, checkRepeat }) {
   const [editId, setEditId] = useState(null);
 
   function editTodo(id, input) {
@@ -16,7 +16,7 @@ function TodoList({ todos }) {
     <List>
       {todos.map((todo) => {
         if (todo.id === editId) {
-          return <EditMode key={todo.id} todo={todo} editTodo={editTodo} />;
+          return <EditMode key={todo.id} todo={todo} editTodo={editTodo} checkRepeat={checkRepeat} />;
         }
         return <Todo todo={todo} key={todo.id} setEditId={setEditId} />;
       })}
